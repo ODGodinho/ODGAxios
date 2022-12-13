@@ -36,6 +36,14 @@ jobs:
         run: "yarn test:ci"
       - name: Build Code
         run: yarn build
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true
       - name: Check valid to semantic-release
         if: ${{ github.event_name == 'push' && env.IS_PACKAGE == 'true' }}
         env:
