@@ -19,12 +19,14 @@
 
 <p align="center">
 
+[![codecov](https://codecov.io/gh/ODGodinho/ODGAxios/branch/main/graph/badge.svg?token=JCLIEK2OFN)](https://codecov.io/gh/ODGodinho/ODGAxios)
 [![Stargazers](https://img.shields.io/github/stars/ODGodinho/ODGAxios?color=F430A4)](https://github.com/ODGodinho/ODGAxios/stargazers)
 [![Made by ODGodinho](https://img.shields.io/badge/made%20by-ODGodinho-%2304A361)](https://www.linkedin.com/in/victor-alves-odgodinho/)
 [![Forks](https://img.shields.io/github/forks/ODGodinho/ODGAxios?color=CD4D34)](https://github.com/ODGodinho/ODGAxios/network/members)
 ![Repository size](https://img.shields.io/github/repo-size/ODGodinho/ODGAxios)
 [![GitHub last commit](https://img.shields.io/github/last-commit/ODGodinho/ODGAxios)](https://github.com/ODGodinho/ODGAxios/commits/master)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen)](https://opensource.org/licenses/MIT)
+[![StyleCI](https://github.styleci.io/repos/577502561/shield?branch=main)](https://github.styleci.io/repos/577502561?branch=main)
 
 </p>
 
