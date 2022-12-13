@@ -2,23 +2,28 @@
     <a href="https://github.com/ODGodinho">
         <img
             src="https://raw.githubusercontent.com/ODGodinho/Stanley-TheTemplate/main/public/images/Stanley.jpg"
-            alt="Stanley Imagem" width="500"
+            alt="Stanley Imagem" width="400"
+        />
+        <br /><br />
+        <img
+            src="https://camo.githubusercontent.com/272811d860f3fab0dd8ff0690e2ca36afbf0c96ad44100b8d42dfdce8511679b/68747470733a2f2f6178696f732d687474702e636f6d2f6173736574732f6c6f676f2e737667"
+            alt="Stanley Imagem" width="260"
         />
     </a>
     <br />
-    Stanley The Template For Typescript By Dragons Gamers
+    Axios (Inversion of control)
     <br />
 </h1>
 
-<h4 align="center">Template Stanley for Typescript projects and packages 📦!</h4>
+<h4 align="center">ODG Message for axios Inversion of control 📦!</h4>
 
 <p align="center">
 
-[![Stargazers](https://img.shields.io/github/stars/ODGodinho/Stanley-TheTemplate-Typescript?color=F430A4)](https://github.com/ODGodinho/Stanley-TheTemplate-Typescript/stargazers)
+[![Stargazers](https://img.shields.io/github/stars/ODGodinho/ODGAxios?color=F430A4)](https://github.com/ODGodinho/ODGAxios/stargazers)
 [![Made by ODGodinho](https://img.shields.io/badge/made%20by-ODGodinho-%2304A361)](https://www.linkedin.com/in/victor-alves-odgodinho/)
-[![Forks](https://img.shields.io/github/forks/ODGodinho/Stanley-TheTemplate-Typescript?color=CD4D34)](https://github.com/ODGodinho/Stanley-TheTemplate-Typescript/network/members)
-![Repository size](https://img.shields.io/github/repo-size/ODGodinho/Stanley-TheTemplate-Typescript)
-[![GitHub last commit](https://img.shields.io/github/last-commit/ODGodinho/Stanley-TheTemplate-Typescript)](https://github.com/ODGodinho/Stanley-TheTemplate-Typescript/commits/master)
+[![Forks](https://img.shields.io/github/forks/ODGodinho/ODGAxios?color=CD4D34)](https://github.com/ODGodinho/ODGAxios/network/members)
+![Repository size](https://img.shields.io/github/repo-size/ODGodinho/ODGAxios)
+[![GitHub last commit](https://img.shields.io/github/last-commit/ODGodinho/ODGAxios)](https://github.com/ODGodinho/ODGAxios/commits/master)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen)](https://opensource.org/licenses/MIT)
 
 </p>
@@ -29,12 +34,8 @@
 - [📗 Libraries](#-libraries)
 - [📁 Dependencies](#-dependencies)
 - [⏩ Get Started](#-get-started)
-  - [🔘 Use Template](#-use-template)
-  - [🔑 Configure Github Token](#-configure-github-token)
-    - [🙈 Create Github Token](#-create-github-token)
-    - [📦 Create NPM Token](#-create-npm-token)
-    - [🔐 Create project Environment](#-create-project-environment)
-  - [💻 Prepare to develop](#-prepare-to-develop)
+  - [🔘 Use Template](#-installation)
+  - [💻 Usage](#-usage)
   - [📍 Start Project](#-start-project)
   - [📨 Build and Run](#-build-and-run)
   - [🧪 Teste Code](#-teste-code)
@@ -43,13 +44,10 @@
 
 ## 🎇 Benefits
 
-- 🚀 Speed start new project or package using typescript
-- 🚨 Over 300 rules for pattern, possible errors and errors in Linter
-- 🎇 Code quality guaranteed
-- 📢 AutoReview when opening a pull-request/merge
-    ![AutoReview Comment example](https://user-images.githubusercontent.com/3797062/97085944-87233a80-165b-11eb-94a8-0a47d5e24905.png)
-- 🧪 Automatic Test when opening pull-request/merge
-- 📦 Automatic Package and release generate on merge
+- 🚀 Speed performance Inversion of control
+- 🚨 Code Quality
+- 🎇 Use Interface
+- 🧪 Teste with 100% coverage
 
 ## 📗 Libraries
 
@@ -64,49 +62,53 @@
 
 - [Node.js](https://nodejs.org) 16 or later
 - [Yarn](https://yarnpkg.com/) Optional/Recommended
-- [ODG TsConfig](https://github.com/ODGodinho/tsconfig) Last Version
+- [ODG Message](https://github.com/ODGodinho/ODGMessage?n=dragonsgamers)
+- [ODG TsConfig](https://github.com/ODGodinho/tsconfig?n=dragonsgamers) Last Version
+- [ODG Exception](https://github.com/ODGodinho/ODGException?n=dragonsgamers) Last Version
 
 ## ⏩ Get Started
 
 ---
 
-### 🔘 Use Template
+### 🔘 Installation
 
-Click in use this template button and clone your template project
+```powershell
+yarn add @odg/message @odg/axios axios
+```
 
-![Use Template](https://raw.githubusercontent.com/ODGodinho/Stanley-TheTemplate/main/public/images/UseTemplate.png)
+### 💻 Usage
 
-### 🔑 Configure Github Token
+For simple example usage, you can use [Inversify](https://www.npmjs.com/package/inversify) for Dependency Injection
 
-#### 🙈 Create Github Token
+```typescript
+import { type MessageInterface, type ResponseInterface } from "@odg/message";
 
-Before create new GITHUB_TOKEN in
+class Test {
 
-- <https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token>
+    public constructor(
+        private readonly requester: MessageInterface
+    ) {
+    }
 
-#### 📦 Create NPM Token
+    public async example(): Promise<ResponseInterface<
+      unknown, // Reques Body
+      Record<string, unknown>, // Response Body
+    >> {
+        return this.requester.request({
+            url: "https://api.github.com/users/ODGodinho",
+        });
+    }
 
-if you want to generate packages create a secret called IS_PACKAGE = true AND create new NPM_TOKEN in
+}
+```
 
-- <https://docs.npmjs.com/creating-and-viewing-access-tokens>
+```typescript
+const test = new Test(new AxiosMessage({
+  // default options axios
+}));
 
-#### 🔐 Create project Environment
-
-- On GitHub.com, navigate to the main page of the repository.
-- Under your repository name, click `⚙️ Settings`.
-![Github Setting images example](https://docs.github.com/assets/cb-27528/images/help/repository/repo-actions-settings.png)
-- In the "Security" section of the sidebar, select `✳️ Secrets`, then click Actions.
-- Click New repository secret.
-- Type a name with: **GH_TOKEN**
-- Enter with your access secret token `ghp_Dsfde....`
-- Click Add secret.
-- If you are going to publish package:
-  - create **IS_PACKAGE** = `true`
-  - create **NPM_TOKEN** = `npm_szxw......`
-
-### 💻 Prepare To Develop
-
-Copy `.env.example` to `.env` and add the values according to your needs.
+console.log(await test.example());
+```
 
 ### 📍 Start Project
 
