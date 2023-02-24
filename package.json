@@ -4,10 +4,10 @@
     "description": "Project Axios using IoC and DI",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
-    "homepage": "",
+    "homepage": "https://github.com/ODGodinho/ODGAxios",
     "repository": {
         "type": "git",
-        "url": ""
+        "url": "https://github.com/ODGodinho/ODGAxios"
     },
     "scripts": {
         "build": "rimraf build && tsc --project ./tsconfig.build.json",
