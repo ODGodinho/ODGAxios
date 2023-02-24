@@ -1,7 +1,9 @@
 import http from "node:http";
 
 import { type ResponseInterface } from "@odg/message";
-import { type RawAxiosResponseHeaders, type AxiosResponse, type AxiosResponseHeaders } from "axios";
+import {
+    type InternalAxiosRequestConfig, type RawAxiosResponseHeaders, type AxiosResponse, type AxiosResponseHeaders,
+} from "axios";
 
 import { AxiosParser } from "./AxiosParser";
 import { AxiosRequestParser } from "./AxiosRequestParser";
@@ -26,7 +28,7 @@ export class AxiosResponseParser {
             headers: AxiosParser.parseHeaders(response.headers) as unknown as AxiosResponseHeaders,
             config: AxiosRequestParser.parseMessageToLibrary({
                 ...response.request,
-            }),
+            }) as InternalAxiosRequestConfig<RequestD>,
         };
     }
 
@@ -44,8 +46,8 @@ export class AxiosResponseParser {
         return {
             data: response.data,
             status: response.status,
-            headers: response.headers,
-            request: await AxiosRequestParser.parseLibraryToMessage({
+            headers: AxiosParser.parseHeaders(response.headers),
+            request: await AxiosRequestParser.parseLibraryToMessage<RequestD>({
                 ...response.config,
                 headers: AxiosParser.parseHeaders(response.config.headers) as unknown as RawAxiosResponseHeaders,
             }),

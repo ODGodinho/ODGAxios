@@ -9,6 +9,7 @@ import {
     MessageException,
 } from "@odg/message";
 import axios, {
+    type AxiosRequestConfig,
     type AxiosInstance,
     type AxiosResponse,
 } from "axios";
@@ -94,14 +95,16 @@ export class AxiosMessage<RequestData, ResponseData> implements MessageInterface
      * @returns {Promise<Error>}
      */
     private async requestException(error: unknown): Promise<Error> {
-        const exceptionConverted = Exception.convertToError(error);
+        const exceptionConverted = Exception.parse(error);
         if (!exceptionConverted) return error as Error;
 
         const exception = new MessageException(
             exceptionConverted.message,
-            exceptionConverted instanceof Exception ? exceptionConverted.preview : undefined,
+            exceptionConverted.preview,
             undefined,
-            axios.isAxiosError(error) ? error.request : undefined,
+            axios.isAxiosError(error) && error.config
+                ? await AxiosRequestParser.parseLibraryToMessage(error.config as AxiosRequestConfig)
+                : undefined,
             axios.isAxiosError(error) && error.response ? await this.parseResponseData(error.response) : undefined,
         );
         Object.defineProperty(exception, "isAxiosError", {

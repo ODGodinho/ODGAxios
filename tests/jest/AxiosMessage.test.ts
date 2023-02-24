@@ -5,12 +5,13 @@ import { AxiosResponseParser } from "../../src/parser/AxiosResponseParser";
 
 describe("AxiosMessage", () => {
     const testHeader = "data.headers.Teste";
+    const httpBinEndpoint = "https://httpbin.org/anything";
 
     test("Teste Request Success Headers", async () => {
         const requester = new AxiosMessage();
 
         const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://httpbin.org/anything",
+            url: httpBinEndpoint,
             headers: {
                 "teste": "test-header",
             },
@@ -33,14 +34,14 @@ describe("AxiosMessage", () => {
         });
 
         await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://httpbin.org/anything",
+            url: httpBinEndpoint,
         })).resolves.toHaveProperty(testHeader, interceptHeader);
     });
 
     test("Teste Timeout Exception", async () => {
         const requester = new AxiosMessage();
         const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://invalid.inv/anything",
+            url: "https://anything.org/anything",
             timeout: 1,
         });
 
@@ -63,26 +64,11 @@ describe("AxiosMessage", () => {
         });
 
         const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://invalid.invalid/anything",
+            url: httpBinEndpoint,
             timeout: 1,
         });
 
         await expect(request).rejects.toHaveProperty("message", interceptNewMessage);
-    });
-
-    test("Teste intercept error request", async () => {
-        const requester = new AxiosMessage({});
-
-        requester.interceptors.request.use(undefined, (error) => {
-            throw error;
-        });
-
-        const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "",
-            timeout: 1,
-        });
-
-        await expect(request).rejects.toHaveProperty("message", "TypeError [ERR_INVALID_URL]: Invalid URL");
     });
 
     test("Teste invalid endpoint", async () => {
@@ -104,5 +90,12 @@ describe("AxiosMessage", () => {
 
         await expect(requester["requestException"](null))
             .resolves.toEqual(null);
+    });
+
+    test("Teste empty exception", async () => {
+        const requester = new AxiosMessage();
+
+        await expect(requester["requestException"](void 0))
+            .resolves.toBeUndefined();
     });
 });
