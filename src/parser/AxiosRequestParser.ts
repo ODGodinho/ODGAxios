@@ -10,7 +10,7 @@ export class AxiosRequestParser {
      *
      * @template {any} RequestD Dados Request Axios
      * @param {RequestInterface<RequestD>} config Dados Request
-     * @returns {Promise<AxiosRequestConfig<RequestD>>}
+     * @returns {AxiosRequestConfig<RequestD>}
      */
     public static parseMessageToLibrary<RequestD>(
         config: RequestInterface<RequestD>,
@@ -37,8 +37,8 @@ export class AxiosRequestParser {
      * Parse Request Axios configuration
      *
      * @template {any} RequestD Dados Request Axios
-     * @param {RequestInterface<RequestD>} config Dados Request
-     * @returns {Promise<AxiosRequestConfig<RequestD>>}
+     * @param {AxiosRequestConfig<RequestD>} config Dados Request
+     * @returns {Promise<RequestInterface<RequestD>>}
      */
     public static async parseLibraryToMessage<RequestD>(
         config: AxiosRequestConfig<RequestD>,

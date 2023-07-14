@@ -2,7 +2,6 @@ import { type HttpHeadersInterface } from "@odg/message";
 
 import { AxiosMessage } from "../../src/AxiosMessage";
 
-jest.setTimeout(30_000);
 describe("Intercept Eject", () => {
     test("Teste Eject intercept header", async () => {
         const requester = new AxiosMessage<unknown, Record<string, string>>();
@@ -27,7 +26,7 @@ describe("Intercept Eject", () => {
         requester.interceptors.response.eject(interceptResponse);
 
         const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://httpbin.org/anything",
+            url: "https://1.1.1.1/",
         });
 
         await Promise.all([
@@ -59,7 +58,7 @@ describe("Intercept Eject", () => {
         requester.interceptors.response.clear();
 
         const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://httpbin.org/anything",
+            url: "https://1.1.1.1/",
         });
 
         await Promise.all([

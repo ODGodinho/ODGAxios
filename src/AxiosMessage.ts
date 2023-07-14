@@ -9,7 +9,6 @@ import {
     MessageException,
 } from "@odg/message";
 import axios, {
-    type AxiosRequestConfig,
     type AxiosInstance,
     type AxiosResponse,
 } from "axios";
@@ -18,6 +17,7 @@ import { AxiosInterceptorRequest } from "./interceptors/AxiosInterceptorRequest"
 import { AxiosInterceptorResponse } from "./interceptors/AxiosInterceptorResponse";
 import { AxiosParser } from "./parser/AxiosParser";
 import { AxiosRequestParser } from "./parser/AxiosRequestParser";
+import { AxiosResponseParser } from "./parser/AxiosResponseParser";
 
 export class AxiosMessage<RequestData, ResponseData> implements MessageInterface<RequestData, ResponseData> {
 
@@ -46,7 +46,6 @@ export class AxiosMessage<RequestData, ResponseData> implements MessageInterface
      *
      * @template {any} RequestD Request Data
      * @template {any} ResponseD Response Data
-     *
      * @param {RequestInterface<RequestD>} options Opções de requisição
      * @returns {Promise<ResponseInterface<RequestD, ResponseD>>}
      */
@@ -98,14 +97,20 @@ export class AxiosMessage<RequestData, ResponseData> implements MessageInterface
         const exceptionConverted = Exception.parse(error);
         if (!exceptionConverted) return error as Error;
 
+        const requestParser = axios.isAxiosError(error) && error.config
+            ? await AxiosRequestParser.parseLibraryToMessage(error.config)
+            : undefined;
+
+        const responseParser = axios.isAxiosError(error) && "response" in error && error.response
+            ? await AxiosResponseParser.parseLibraryToMessage(error.response)
+            : undefined;
+
         const exception = new MessageException(
             exceptionConverted.message,
             exceptionConverted.preview,
             undefined,
-            axios.isAxiosError(error) && error.config
-                ? await AxiosRequestParser.parseLibraryToMessage(error.config as AxiosRequestConfig)
-                : undefined,
-            axios.isAxiosError(error) && error.response ? await this.parseResponseData(error.response) : undefined,
+            requestParser,
+            responseParser,
         );
         Object.defineProperty(exception, "isAxiosError", {
             configurable: true,

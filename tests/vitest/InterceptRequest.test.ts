@@ -15,7 +15,7 @@ describe("AxiosMessage", () => {
         });
 
         await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://httpbin.org/anything",
-        })).resolves.toHaveProperty("data.headers.Teste", interceptHeader);
+            url: "https://1.1.1.1/",
+        })).resolves.toHaveProperty("request.headers.teste", interceptHeader);
     });
 });

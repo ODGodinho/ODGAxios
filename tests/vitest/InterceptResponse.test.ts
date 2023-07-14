@@ -3,7 +3,9 @@ import { type HttpHeadersInterface } from "@odg/message";
 import { AxiosMessage } from "../../src/AxiosMessage";
 
 describe("Intercept Eject", () => {
-    const endpoint = "https://httpbin.org/anything";
+    const endpoint = "https://api.github.com/";
+    const requestHeaderIntercept = "data.biscoito";
+
     test("Teste intercept Response", async () => {
         const requester = new AxiosMessage<unknown, Record<string, string>>();
         const interceptHeader = "biscoito-intercept";
@@ -16,7 +18,7 @@ describe("Intercept Eject", () => {
 
         await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: endpoint,
-        })).resolves.toHaveProperty("data.biscoito", interceptHeader);
+        })).resolves.toHaveProperty(requestHeaderIntercept, interceptHeader);
     });
 
     test("Teste Eject intercept Response", async () => {
@@ -33,7 +35,7 @@ describe("Intercept Eject", () => {
 
         await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: "https://catfact.ninja/fact",
-        })).resolves.not.toHaveProperty("data.biscoito", interceptHeader);
+        })).resolves.not.toHaveProperty(requestHeaderIntercept, interceptHeader);
     });
 
     test("Teste Empty Intercept", async () => {
@@ -42,6 +44,6 @@ describe("Intercept Eject", () => {
 
         await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: endpoint,
-        })).resolves.not.toHaveProperty("data.headers.Teste", interceptHeader);
+        })).resolves.not.toHaveProperty(requestHeaderIntercept, interceptHeader);
     });
 });

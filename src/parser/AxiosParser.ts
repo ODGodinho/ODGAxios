@@ -6,7 +6,7 @@ export class AxiosParser {
     /**
      * Add support axios 1.0 headers
      *
-     * @param {unknown} headers Axios Headers Object
+     * @param {unknown | undefined} headers Axios Headers Object
      * @returns {HttpHeadersInterface}
      */
     public static parseHeaders(headers?: unknown): HttpHeadersInterface {

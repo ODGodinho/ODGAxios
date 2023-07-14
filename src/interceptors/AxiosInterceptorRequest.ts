@@ -1,25 +1,26 @@
 /* eslint-disable arrow-body-style */
 import {
     type MessageInterceptorOptions,
-    type onFulfilledTypo,
-    type onRejectedTypo,
+    type onFulfilledType,
+    type onRejectedType,
     type InterceptorManager,
     type RequestInterface,
 } from "@odg/message";
-import { type AxiosRequestConfig, type AxiosInterceptorManager } from "axios";
+import { type AxiosRequestConfig } from "axios";
 
 import { AxiosRequestParser } from "../parser/AxiosRequestParser";
 
-export class AxiosInterceptorRequest<RequestData> implements InterceptorManager<RequestInterface<RequestData>> {
+import { AxiosInterceptor } from "./AxiosInterceptor";
 
-    public constructor(
-        private readonly interceptor: AxiosInterceptorManager<AxiosRequestConfig<RequestData>>,
-    ) {
-    }
+export class AxiosInterceptorRequest<
+    RequestData,
+> extends AxiosInterceptor<
+    AxiosRequestConfig<RequestData>
+> implements InterceptorManager<RequestInterface<RequestData>> {
 
     public use(
-        onFulfilled?: onFulfilledTypo<RequestInterface<RequestData>>,
-        onRejected?: onRejectedTypo,
+        onFulfilled?: onFulfilledType<RequestInterface<RequestData>>,
+        onRejected?: onRejectedType,
         options?: MessageInterceptorOptions,
     ): number {
         return this.interceptor.use(
@@ -38,16 +39,6 @@ export class AxiosInterceptorRequest<RequestData> implements InterceptorManager<
                 synchronous: options?.synchronous,
             },
         );
-    }
-
-    public eject(id: number): void {
-        this.interceptor.eject(id);
-    }
-
-    public clear(): void {
-        if ("clear" in this.interceptor) {
-            (this.interceptor.clear as CallableFunction)();
-        }
     }
 
 }

@@ -1,12 +1,8 @@
 name: Ci Job
-
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-
-env:
-  IS_PACKAGE: ${{ secrets.IS_PACKAGE }}
+  pull_request_target:
 
 jobs:
   review-and-test:
@@ -47,9 +43,12 @@ jobs:
           name: codecov-umbrella
           fail_ci_if_error: true
           verbose: true
-      - name: Check valid to semantic-release
-        if: ${{ github.event_name == 'push' && env.IS_PACKAGE == 'true' }}
+      - if: ${{ github.event_name == 'push' && vars.IS_PACKAGE == 'true' }}
+        name: Install semantic release
+        run: yarn global add semantic-release
+      - if: ${{ github.event_name == 'push' && vars.IS_PACKAGE == 'true' }}
+        name: Run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn semantic-release
+        run: semantic-release

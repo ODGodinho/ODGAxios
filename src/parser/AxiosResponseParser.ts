@@ -15,8 +15,8 @@ export class AxiosResponseParser {
      *
      * @template {any} RequestD Data Request
      * @template {any} ResponseD Data Response
-     * @param {AxiosResponse<ResponseD, RequestD>} response axios Response Object
-     * @returns {Promise<ResponseInterface<RequestD, ResponseD>>}
+     * @param {ResponseInterface<RequestD, ResponseD>} response axios Response Object
+     * @returns {Promise<AxiosResponse<ResponseD, RequestD>>}
      */
     public static async parseMessageToLibrary<RequestD, ResponseD>(
         response: ResponseInterface<RequestD, ResponseD>,

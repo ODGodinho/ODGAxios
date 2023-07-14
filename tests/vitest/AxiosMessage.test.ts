@@ -4,21 +4,22 @@ import { AxiosMessage } from "../../src/AxiosMessage";
 import { AxiosResponseParser } from "../../src/parser/AxiosResponseParser";
 
 describe("AxiosMessage", () => {
-    const testHeader = "data.headers.Teste";
-    const httpBinEndpoint = "https://httpbin.org/anything";
+    const headerName = "teste";
+    const testHeader = `request.headers.${headerName}`;
+    const httpBinEndpoint = "https://1.1.1.1/";
 
     test("Teste Request Success Headers", async () => {
         const requester = new AxiosMessage();
 
-        const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
+        const response = requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: httpBinEndpoint,
             headers: {
-                "teste": "test-header",
+                [headerName]: "test-header",
             },
         });
 
-        await expect(request).resolves.toHaveProperty(testHeader, "test-header");
-        await expect(AxiosResponseParser.parseMessageToLibrary(await request))
+        await expect(response).resolves.toHaveProperty(testHeader, "test-header");
+        await expect(AxiosResponseParser.parseMessageToLibrary(await response))
             .resolves.toHaveProperty("statusText", "OK");
     });
 
@@ -33,20 +34,22 @@ describe("AxiosMessage", () => {
             return config;
         });
 
-        await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
+        const response = requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: httpBinEndpoint,
-        })).resolves.toHaveProperty(testHeader, interceptHeader);
+        });
+
+        await expect(response).resolves.toHaveProperty(testHeader, interceptHeader);
     });
 
     test("Teste Timeout Exception", async () => {
         const requester = new AxiosMessage();
-        const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
+        const response = requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: "https://anything.org/anything",
             timeout: 1,
         });
 
-        await expect(request).rejects.toBeInstanceOf(MessageException);
-        await expect(request).rejects.toHaveProperty("message", "timeout of 1ms exceeded");
+        await expect(response).rejects.toBeInstanceOf(MessageException);
+        await expect(response).rejects.toHaveProperty("message", "timeout of 1ms exceeded");
     });
 
     test("Teste intercept error new message", async () => {
