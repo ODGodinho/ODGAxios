@@ -533,20 +533,19 @@
     "@typescript-eslint/utils" "*"
     comment-parser "*"
 
-"@odg/exception@*", "@odg/exception@^1.0.0":
+"@odg/exception@*":
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/@odg/exception/-/exception-1.3.2.tgz#c7b3e1e7ab02eadb936e539083761b7015ebdbd5"
   integrity sha512-adZGbDcmq5y8TW3JKFuXHwcGhL8KYdzMU7bGIWSjlpa7TS9By+27K/15ZwcU/j76jKOaORJ+9bfXkezRf5OQew==
 
 "@odg/message@*":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@odg/message/-/message-1.0.0.tgz#1031a4131a66fb03d9a56c9b3675172fc8174dff"
-  integrity sha512-7CqQIo0qBKhEQxgMCa9i//gBmXLDncBBNxtv2nqsJTU80cFgD04EIIxJgb33ewx5ZT2bH6FuizBxRvEb0PLoWw==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@odg/message/-/message-1.1.0.tgz#88b30167f9dacc3e52b4c3b22e3e36ac095bda0f"
+  integrity sha512-u1zYqmeRRyEQVnGmzUbHtTh/UKwgtW8QTpcD9tMciXcR1ydX1W40CKilqoPjqs6hiGULJPcqpAZJC9GxEnTgkw==
   dependencies:
-    "@odg/exception" "^1.0.0"
-    "@odg/tsconfig" "*"
+    "@odg/exception" "*"
 
-"@odg/tsconfig@*", "@odg/tsconfig@^1.1.0":
+"@odg/tsconfig@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@odg/tsconfig/-/tsconfig-1.1.0.tgz#a7962a4a378ccd10263342f0b0ba419427a7a595"
   integrity sha512-VVgIIR43cSA9jWpssH3awL348jnxhWkcjfNje/5NhaRqIBQWToa3P9f45czmYfFRcvbaZiwXMJaunUROqowhTg==

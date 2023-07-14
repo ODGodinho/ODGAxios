@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { Exception } from "@odg/exception";
 import {
     type InterceptorManager,
