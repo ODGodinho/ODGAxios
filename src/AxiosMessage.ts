@@ -14,7 +14,6 @@ import axios, {
 
 import { AxiosInterceptorRequest } from "./interceptors/AxiosInterceptorRequest";
 import { AxiosInterceptorResponse } from "./interceptors/AxiosInterceptorResponse";
-import { AxiosParser } from "./parser/AxiosParser";
 import { AxiosRequestParser } from "./parser/AxiosRequestParser";
 import { AxiosResponseParser } from "./parser/AxiosResponseParser";
 
