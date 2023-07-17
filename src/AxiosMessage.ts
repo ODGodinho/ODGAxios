@@ -14,7 +14,6 @@ import axios, {
 
 import { AxiosInterceptorRequest } from "./interceptors/AxiosInterceptorRequest";
 import { AxiosInterceptorResponse } from "./interceptors/AxiosInterceptorResponse";
-import { AxiosParser } from "./parser/AxiosParser";
 import { AxiosRequestParser } from "./parser/AxiosRequestParser";
 import { AxiosResponseParser } from "./parser/AxiosResponseParser";
 
@@ -57,32 +56,10 @@ export class AxiosMessage<RequestData, ResponseData> implements MessageInterface
                 AxiosRequestParser.parseMessageToLibrary(options),
             );
 
-            return await this.parseResponseData(response);
+            return await AxiosResponseParser.parseLibraryToMessage(response);
         } catch (error: unknown) {
             throw await this.requestException(error);
         }
-    }
-
-    /**
-     * Cast Response axios To ResponseInterface
-     *
-     * @template {any} RequestD Data Request
-     * @template {any} ResponseD Data Response
-     * @param {AxiosResponse<ResponseD, RequestD>} response axios Response Object
-     * @returns {Promise<ResponseInterface<RequestD, ResponseD>>}
-     */
-    public async parseResponseData<RequestD, ResponseD>(
-        response: AxiosResponse<ResponseD, RequestD>,
-    ): Promise<ResponseInterface<RequestD, ResponseD>> {
-        return {
-            data: response.data,
-            status: response.status,
-            headers: AxiosParser.parseHeaders(response.headers),
-            request: {
-                ...response.config,
-                headers: AxiosParser.parseHeaders(response.config.headers),
-            },
-        };
     }
 
     /**
