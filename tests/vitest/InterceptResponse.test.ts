@@ -46,4 +46,14 @@ describe("Intercept Eject", () => {
             url: endpoint,
         })).resolves.not.toHaveProperty(requestHeaderIntercept, interceptHeader);
     });
+
+    test("Response without intercept error", async () => {
+        const requester = new AxiosMessage();
+
+        requester.interceptors.response.use();
+
+        await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
+            url: "https://reqres.in/api/unknown/23",
+        })).rejects.toHaveProperty("response.status", 404);
+    });
 });

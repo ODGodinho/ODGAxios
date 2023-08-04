@@ -31,7 +31,7 @@ export class AxiosInterceptorResponse<
 
         return this.interceptor.use(
             response,
-            onRejected,
+            this.onRejected(onRejected),
             {
                 synchronous: options?.synchronous,
             },

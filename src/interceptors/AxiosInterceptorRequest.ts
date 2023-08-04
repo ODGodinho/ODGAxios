@@ -33,7 +33,7 @@ export class AxiosInterceptorRequest<
                     ),
                 };
             },
-            onRejected,
+            this.onRejected(onRejected),
             {
                 synchronous: options?.synchronous,
             },
