@@ -1,12 +1,14 @@
 import axios from "axios";
 
+import { AxiosParser } from "src/parser/AxiosParser";
+
 import { AxiosMessage } from "../../src/AxiosMessage";
 
 describe("AxiosMessage", () => {
     test("Test is Axios Error", async () => {
         const requester = new AxiosMessage();
 
-        const axiosError = (async (): Promise<Error> => requester["requestException"](
+        const axiosError = (async (): Promise<Error> => AxiosParser.parserRequestException(
             await requester.request({
                 url: "https://invalid.invalid/invalid",
             }).catch((error: unknown) => error),

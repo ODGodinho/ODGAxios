@@ -1,7 +1,10 @@
 import { MessageException, type HttpHeadersInterface } from "@odg/message";
 
+import { AxiosParser } from "src/parser/AxiosParser";
+
 import { AxiosMessage } from "../../src/AxiosMessage";
 import { AxiosResponseParser } from "../../src/parser/AxiosResponseParser";
+import { Exception } from "@odg/exception";
 
 describe("AxiosMessage", () => {
     const headerName = "teste";
@@ -43,13 +46,16 @@ describe("AxiosMessage", () => {
 
     test("Teste Timeout Exception", async () => {
         const requester = new AxiosMessage();
+
         const response = requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: "https://anything.org/anything",
             timeout: 1,
         });
 
-        await expect(response).rejects.toBeInstanceOf(MessageException);
-        await expect(response).rejects.toHaveProperty("message", "timeout of 1ms exceeded");
+        await Promise.all([
+            expect(response).rejects.toBeInstanceOf(MessageException),
+            expect(response).rejects.toHaveProperty("message", "timeout of 1ms exceeded"),
+        ]);
     });
 
     test("Teste intercept error new message", async () => {
@@ -89,16 +95,23 @@ describe("AxiosMessage", () => {
     });
 
     test("Teste empty exception", async () => {
-        const requester = new AxiosMessage();
-
-        await expect(requester["requestException"](null))
-            .resolves.toEqual(null);
+        expect(AxiosParser.parserRequestException(null)).toEqual(null);
     });
 
     test("Teste empty exception", async () => {
-        const requester = new AxiosMessage();
+        expect(AxiosParser.parserRequestException(void 0)).toBeUndefined();
+    });
 
-        await expect(requester["requestException"](void 0))
-            .resolves.toBeUndefined();
+    test("Teste parser new Exception class", async () => {
+        const exception = Exception.parse("Test Exception");
+
+        expect(exception).toMatchObject({ message: "Test Exception" });
+        expect(exception).toBeInstanceOf(Exception);
+    });
+
+    test("Test Empty Error", async () => {
+        const exception = AxiosParser["getErrorMessage"](null);
+
+        expect(exception).toBe("null");
     });
 });

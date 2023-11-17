@@ -1,16 +1,16 @@
-import { Exception } from "@odg/exception";
 import {
     type InterceptorManager,
     type RequestInterface,
     type ResponseInterface,
     type MessageInterface,
     type DefaultMessageConstructor,
-    MessageException,
 } from "@odg/message";
 import axios, {
     type AxiosInstance,
     type AxiosResponse,
 } from "axios";
+
+import { AxiosParser } from "src/parser/AxiosParser";
 
 import { AxiosInterceptorRequest } from "./interceptors/AxiosInterceptorRequest";
 import { AxiosInterceptorResponse } from "./interceptors/AxiosInterceptorResponse";
@@ -56,46 +56,10 @@ export class AxiosMessage<RequestData, ResponseData> implements MessageInterface
                 AxiosRequestParser.parseMessageToLibrary(options),
             );
 
-            return await AxiosResponseParser.parseLibraryToMessage(response);
+            return AxiosResponseParser.parseLibraryToMessage(response);
         } catch (error: unknown) {
-            throw await this.requestException(error);
+            throw AxiosParser.parserRequestException(error);
         }
-    }
-
-    /**
-     * Request Exception parse MessageException
-     *
-     * @param {unknown} error Error Exception
-     * @throws {MessageException} Convert Message Exception class
-     * @returns {Promise<Error>}
-     */
-    private async requestException(error: unknown): Promise<Error> {
-        const exceptionConverted = Exception.parse(error);
-        if (!exceptionConverted) return error as Error;
-
-        const requestParser = axios.isAxiosError(error) && error.config
-            ? await AxiosRequestParser.parseLibraryToMessage(error.config)
-            : undefined;
-
-        const responseParser = axios.isAxiosError(error) && "response" in error && error.response
-            ? await AxiosResponseParser.parseLibraryToMessage(error.response)
-            : undefined;
-
-        const exception = new MessageException(
-            exceptionConverted.message,
-            exceptionConverted.preview,
-            undefined,
-            requestParser,
-            responseParser,
-        );
-        Object.defineProperty(exception, "isAxiosError", {
-            configurable: true,
-            enumerable: false,
-            value: axios.isAxiosError(error),
-            writable: true,
-        });
-
-        return exception;
     }
 
 }
