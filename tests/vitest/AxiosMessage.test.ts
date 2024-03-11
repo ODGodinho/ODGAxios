@@ -43,13 +43,16 @@ describe("AxiosMessage", () => {
 
     test("Teste Timeout Exception", async () => {
         const requester = new AxiosMessage();
+
         const response = requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: "https://anything.org/anything",
             timeout: 1,
         });
 
-        await expect(response).rejects.toBeInstanceOf(MessageException);
-        await expect(response).rejects.toHaveProperty("message", "timeout of 1ms exceeded");
+        await Promise.all([
+            expect(response).rejects.toBeInstanceOf(MessageException),
+            expect(response).rejects.toHaveProperty("message", "timeout of 1ms exceeded"),
+        ]);
     });
 
     test("Teste intercept error new message", async () => {
