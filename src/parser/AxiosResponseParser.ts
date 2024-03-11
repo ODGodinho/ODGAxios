@@ -16,11 +16,11 @@ export class AxiosResponseParser {
      * @template {any} RequestD Data Request
      * @template {any} ResponseD Data Response
      * @param {ResponseInterface<RequestD, ResponseD>} response axios Response Object
-     * @returns {Promise<AxiosResponse<ResponseD, RequestD>>}
+     * @returns {AxiosResponse<ResponseD, RequestD>}
      */
-    public static async parseMessageToLibrary<RequestD, ResponseD>(
+    public static parseMessageToLibrary<RequestD, ResponseD>(
         response: ResponseInterface<RequestD, ResponseD>,
-    ): Promise<AxiosResponse<ResponseD, RequestD>> {
+    ): AxiosResponse<ResponseD, RequestD> {
         return {
             data: response.data,
             status: response.status,
@@ -38,16 +38,16 @@ export class AxiosResponseParser {
      * @template {any} RequestD Data Request
      * @template {any} ResponseD Data Response
      * @param {AxiosResponse<ResponseD, RequestD>} response axios Response Object
-     * @returns {Promise<ResponseInterface<RequestD, ResponseD>>}
+     * @returns {ResponseInterface<RequestD, ResponseD>}
      */
-    public static async parseLibraryToMessage<RequestD, ResponseD>(
+    public static parseLibraryToMessage<RequestD, ResponseD>(
         response: AxiosResponse<ResponseD, RequestD>,
-    ): Promise<ResponseInterface<RequestD, ResponseD>> {
+    ): ResponseInterface<RequestD, ResponseD> {
         return {
             data: response.data,
             status: response.status,
             headers: AxiosParser.parseHeaders(response.headers),
-            request: await AxiosRequestParser.parseLibraryToMessage<RequestD>({
+            request: AxiosRequestParser.parseLibraryToMessage<RequestD>({
                 ...response.config,
                 headers: AxiosParser.parseHeaders(response.config.headers) as unknown as RawAxiosResponseHeaders,
             }),

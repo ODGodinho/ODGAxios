@@ -29,7 +29,7 @@ export class AxiosInterceptorRequest<
                 return {
                     ...config,
                     ...AxiosRequestParser.parseMessageToLibrary(
-                        await onFulfilled(await AxiosRequestParser.parseLibraryToMessage(config)),
+                        await onFulfilled(AxiosRequestParser.parseLibraryToMessage(config)),
                     ),
                 };
             },

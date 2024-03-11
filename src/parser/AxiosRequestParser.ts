@@ -1,4 +1,4 @@
-import { type RequestInterface } from "@odg/message";
+import { type ParametersInterface, type RequestInterface } from "@odg/message";
 import { type AxiosRequestConfig } from "axios";
 
 import { AxiosParser } from "./AxiosParser";
@@ -38,18 +38,17 @@ export class AxiosRequestParser {
      *
      * @template {any} RequestD Dados Request Axios
      * @param {AxiosRequestConfig<RequestD>} config Dados Request
-     * @returns {Promise<RequestInterface<RequestD>>}
+     * @returns {RequestInterface<RequestD>}
      */
-    public static async parseLibraryToMessage<RequestD>(
+    public static parseLibraryToMessage<RequestD>(
         config: AxiosRequestConfig<RequestD>,
-    ): Promise<RequestInterface<RequestD>> {
+    ): RequestInterface<RequestD> {
         return Object.fromEntries(Object.entries({
             url: config.url,
             baseURL: config.baseURL,
             method: config.method,
             headers: AxiosParser.parseHeaders(config.headers),
-
-            // TODO: params: config.params,
+            params: config.params as ParametersInterface,
             data: config.data,
             timeout: config.timeout,
             responseType: config.responseType,

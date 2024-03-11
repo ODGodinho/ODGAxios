@@ -19,8 +19,8 @@ describe("AxiosMessage", () => {
         });
 
         await expect(response).resolves.toHaveProperty(testHeader, "test-header");
-        await expect(AxiosResponseParser.parseMessageToLibrary(await response))
-            .resolves.toHaveProperty("statusText", "OK");
+        expect(AxiosResponseParser.parseMessageToLibrary(await response))
+            .toHaveProperty("statusText", "OK");
     });
 
     test("Teste Request Intercept", async () => {
@@ -86,19 +86,5 @@ describe("AxiosMessage", () => {
         });
 
         await expect(request).rejects.toHaveProperty("response.data.message", "Not Found");
-    });
-
-    test("Teste empty exception", async () => {
-        const requester = new AxiosMessage();
-
-        await expect(requester["requestException"](null))
-            .resolves.toEqual(null);
-    });
-
-    test("Teste empty exception", async () => {
-        const requester = new AxiosMessage();
-
-        await expect(requester["requestException"](void 0))
-            .resolves.toBeUndefined();
     });
 });

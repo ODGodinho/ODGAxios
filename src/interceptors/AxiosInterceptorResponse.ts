@@ -42,8 +42,8 @@ export class AxiosInterceptorResponse<
         onFulfilled: onFulfilledType<ResponseInterface<RequestD, ResponseD>>,
     ): onFulfilledFunctionType<RequestD, ResponseD> {
         return async (response: AxiosResponse<ResponseD, RequestD>): Promise<AxiosResponse<ResponseD, RequestD>> => {
-            const responseMessage = await AxiosResponseParser.parseLibraryToMessage(response);
-            const messageResponse = await AxiosResponseParser.parseMessageToLibrary(
+            const responseMessage = AxiosResponseParser.parseLibraryToMessage(response);
+            const messageResponse = AxiosResponseParser.parseMessageToLibrary(
                 await onFulfilled(responseMessage),
             );
 
