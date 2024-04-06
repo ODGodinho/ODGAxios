@@ -57,7 +57,7 @@
         "@odg/tsconfig": "*",
         "@types/node": ">=20",
         "@vitest/coverage-v8": "*",
-        "eslint": "*",
+        "eslint": "9.0.0",
         "rimraf": "*",
         "typescript": "^5.4.2",
         "vite-tsconfig-paths": "*",
