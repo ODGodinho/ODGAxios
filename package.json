@@ -66,6 +66,6 @@
     "dependencies": {
         "@odg/exception": "*",
         "@odg/message": "*",
-        "axios": "*"
+        "axios": "1.7.4"
     }
 }
