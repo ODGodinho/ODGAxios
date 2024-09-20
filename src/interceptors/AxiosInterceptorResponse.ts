@@ -19,8 +19,8 @@ export class AxiosInterceptorResponse<
     RequestData,
     ResponseData,
 > extends AxiosInterceptor<
-    AxiosResponse
-> implements InterceptorManager<ResponseInterface<RequestData, ResponseData>> {
+        AxiosResponse
+    > implements InterceptorManager<ResponseInterface<RequestData, ResponseData>> {
 
     public use<RequestD = RequestData, ResponseD = ResponseData>(
         onFulfilled?: onFulfilledType<ResponseInterface<RequestD, ResponseD>>,

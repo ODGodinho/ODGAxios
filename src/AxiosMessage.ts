@@ -57,7 +57,7 @@ export class AxiosMessage<RequestData, ResponseData> implements MessageInterface
 
             return AxiosResponseParser.parseLibraryToMessage(response);
         } catch (error: unknown) {
-            throw Exception.parse(error) as Error;
+            throw Exception.parse(error)!;
         }
     }
 

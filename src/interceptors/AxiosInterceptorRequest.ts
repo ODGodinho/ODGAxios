@@ -14,8 +14,8 @@ import { AxiosInterceptor } from "./AxiosInterceptor";
 export class AxiosInterceptorRequest<
     RequestData,
 > extends AxiosInterceptor<
-    AxiosRequestConfig<RequestData>
-> implements InterceptorManager<RequestInterface<RequestData>> {
+        AxiosRequestConfig<RequestData>
+    > implements InterceptorManager<RequestInterface<RequestData>> {
 
     public use(
         onFulfilled?: onFulfilledType<RequestInterface<RequestData>>,
