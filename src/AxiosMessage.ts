@@ -4,12 +4,16 @@ import {
     type RequestInterface,
     type ResponseInterface,
     type MessageInterface,
-    type DefaultMessageConstructor,
 } from "@odg/message";
 import axios, {
+    type AxiosRequestConfig,
+    type AxiosInterceptorManager,
+    type RawAxiosResponseHeaders,
     type AxiosInstance,
     type AxiosResponse,
 } from "axios";
+
+import { AxiosParser } from "src/parser/AxiosParser";
 
 import { AxiosInterceptorRequest } from "./interceptors/AxiosInterceptorRequest";
 import { AxiosInterceptorResponse } from "./interceptors/AxiosInterceptorResponse";
@@ -25,17 +29,39 @@ export class AxiosMessage<RequestData, ResponseData> implements MessageInterface
 
     private readonly client: AxiosInstance;
 
-    public constructor(config?: DefaultMessageConstructor<RequestData>) {
+    public constructor(config?: RequestInterface<RequestData>) {
         this.client = axios.create(config && AxiosRequestParser.parseMessageToLibrary(config));
 
         this.interceptors = {
             request: new AxiosInterceptorRequest<RequestData>(
-                this.client.interceptors.request,
+                this.client.interceptors.request as AxiosInterceptorManager<AxiosRequestConfig<RequestData>>,
             ),
             response: new AxiosInterceptorResponse<RequestData, ResponseData>(
                 this.client.interceptors.response,
             ),
         };
+    }
+
+    public setDefaultOptions(config?: RequestInterface<RequestData>): this {
+        const defaults = AxiosRequestParser.parseMessageToLibrary({
+            ...config,
+            headers: AxiosParser.parseHeaders(config?.headers),
+        });
+
+        for (const [ key, value ] of Object.entries(defaults)) {
+            this.client.defaults[key as keyof AxiosRequestConfig] = value as unknown;
+        }
+
+        return this;
+    }
+
+    public getDefaultOptions(): RequestInterface<RequestData> {
+        const config = this.client.defaults;
+
+        return AxiosRequestParser.parseLibraryToMessage<RequestData>({
+            ...config,
+            headers: AxiosParser.parseHeaders(config.headers) as unknown as RawAxiosResponseHeaders,
+        });
     }
 
     /**
@@ -57,6 +83,7 @@ export class AxiosMessage<RequestData, ResponseData> implements MessageInterface
 
             return AxiosResponseParser.parseLibraryToMessage(response);
         } catch (error: unknown) {
+            // eslint-disable-next-line no-throw-literal
             throw Exception.parse(error)!;
         }
     }

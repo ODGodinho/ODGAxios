@@ -25,16 +25,13 @@ export class AxiosInterceptorResponse<
     public use<RequestD = RequestData, ResponseD = ResponseData>(
         onFulfilled?: onFulfilledType<ResponseInterface<RequestD, ResponseD>>,
         onRejected?: onRejectedType,
-        options?: MessageInterceptorOptions,
+        _options?: MessageInterceptorOptions,
     ): number {
         const response = onFulfilled && this.onFulfilledResponse<RequestD, ResponseD>(onFulfilled);
 
         return this.interceptor.use(
             response,
             this.onRejected(onRejected),
-            {
-                synchronous: options?.synchronous,
-            },
         );
     }
 

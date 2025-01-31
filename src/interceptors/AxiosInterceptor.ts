@@ -14,7 +14,7 @@ export abstract class AxiosInterceptor<AxiosInterceptor> {
 
     public clear(): void {
         if ("clear" in this.interceptor) {
-            (this.interceptor.clear as CallableFunction)();
+            (this.interceptor.clear as () => unknown)();
         }
     }
 
