@@ -13,7 +13,7 @@ import axios, {
     type AxiosResponse,
 } from "axios";
 
-import { AxiosParser } from "src/parser/AxiosParser";
+import { AxiosParser } from "./parser/AxiosParser";
 
 import { AxiosInterceptorRequest } from "./interceptors/AxiosInterceptorRequest";
 import { AxiosInterceptorResponse } from "./interceptors/AxiosInterceptorResponse";
