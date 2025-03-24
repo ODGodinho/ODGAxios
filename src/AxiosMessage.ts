@@ -1,9 +1,10 @@
 import { Exception } from "@odg/exception";
 import {
-    type InterceptorManager,
+    type InterceptorsInterface,
     type RequestInterface,
     type ResponseInterface,
     type MessageInterface,
+    ODGMessage,
 } from "@odg/message";
 import axios, {
     type AxiosRequestConfig,
@@ -13,23 +14,23 @@ import axios, {
     type AxiosResponse,
 } from "axios";
 
-import { AxiosParser } from "./parser/AxiosParser";
-
 import { AxiosInterceptorRequest } from "./interceptors/AxiosInterceptorRequest";
 import { AxiosInterceptorResponse } from "./interceptors/AxiosInterceptorResponse";
+import { AxiosParser } from "./parser/AxiosParser";
 import { AxiosRequestParser } from "./parser/AxiosRequestParser";
 import { AxiosResponseParser } from "./parser/AxiosResponseParser";
 
-export class AxiosMessage<RequestData, ResponseData> implements MessageInterface<RequestData, ResponseData> {
+export class AxiosMessage<
+    RequestData,
+    ResponseData,
+> extends ODGMessage implements MessageInterface<RequestData, ResponseData> {
 
-    public readonly interceptors!: {
-        request: InterceptorManager<RequestInterface<RequestData>>;
-        response: InterceptorManager<ResponseInterface<RequestData, ResponseData>>;
-    };
+    public readonly interceptors!: InterceptorsInterface<RequestData, ResponseData>;
 
     private readonly client: AxiosInstance;
 
     public constructor(config?: RequestInterface<RequestData>) {
+        super();
         this.client = axios.create(config && AxiosRequestParser.parseMessageToLibrary(config));
 
         this.interceptors = {

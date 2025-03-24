@@ -30,7 +30,8 @@ export class AxiosRequestParser {
             maxRedirects: config.maxRedirects,
             socketPath: config.socketPath,
             proxy: config.proxy,
-        }).filter(([ , value ]) => value !== undefined));
+            signal: config.signal,
+        } as AxiosRequestConfig<RequestD>).filter(([ , value ]) => value !== undefined));
     }
 
     /**
@@ -58,7 +59,8 @@ export class AxiosRequestParser {
             maxRedirects: config.maxRedirects,
             socketPath: config.socketPath,
             proxy: config.proxy,
-        }).filter(([ , value ]) => value !== undefined));
+            signal: config.signal,
+        } as RequestInterface<RequestD>).filter(([ , value ]) => value !== undefined));
     }
 
 }
