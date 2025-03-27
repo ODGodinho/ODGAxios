@@ -7,12 +7,21 @@ import { AxiosResponseParser } from "./parser/AxiosResponseParser";
 
 Exception.$parsers.add((exception, original) => {
     if (axios.isAxiosError(original)) {
+        const response = original.response
+            ? AxiosResponseParser.parseLibraryToMessage(original.response)
+            : undefined;
+        const config = original.config
+            ? AxiosRequestParser.parseLibraryToMessage({
+                ...original.config,
+                endTime: Date.now(),
+            })
+            : undefined;
         const newException = new MessageException(
             exception.message,
             exception.preview,
             original.code,
-            original.config ? AxiosRequestParser.parseLibraryToMessage(original.config) : undefined,
-            original.response ? AxiosResponseParser.parseLibraryToMessage(original.response) : undefined,
+            response?.request ?? config,
+            response,
         );
         newException.stack = original.stack;
 

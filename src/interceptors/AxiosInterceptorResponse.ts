@@ -5,15 +5,11 @@ import {
     type InterceptorManager,
     type ResponseInterface,
 } from "@odg/message";
-import { type AxiosResponse } from "axios";
+import { type AxiosInterceptorManager, type AxiosResponse } from "axios";
 
 import { AxiosResponseParser } from "../parser/AxiosResponseParser";
 
 import { AxiosInterceptor } from "./AxiosInterceptor";
-
-export type onFulfilledFunctionType<RequestData, ResponseData> = (
-    response: AxiosResponse<ResponseData, RequestData>
-) => Promise<AxiosResponse<ResponseData, RequestData>>;
 
 export class AxiosInterceptorResponse<
     RequestData,
@@ -22,33 +18,30 @@ export class AxiosInterceptorResponse<
         AxiosResponse
     > implements InterceptorManager<ResponseInterface<RequestData, ResponseData>> {
 
+    protected readonly parser = AxiosResponseParser;
+
     public use<RequestD = RequestData, ResponseD = ResponseData>(
         onFulfilled?: onFulfilledType<ResponseInterface<RequestD, ResponseD>>,
         onRejected?: onRejectedType,
         _options?: MessageInterceptorOptions,
     ): number {
-        const response = onFulfilled && this.onFulfilledResponse<RequestD, ResponseD>(onFulfilled);
+        const responseIntercept = onFulfilled && this.onFulfilledResponse<RequestD, ResponseD>(onFulfilled);
 
         return this.interceptor.use(
-            response,
+            responseIntercept,
             this.onRejected(onRejected),
         );
     }
 
     private onFulfilledResponse<RequestD = RequestData, ResponseD = ResponseData>(
         onFulfilled: onFulfilledType<ResponseInterface<RequestD, ResponseD>>,
-    ): onFulfilledFunctionType<RequestD, ResponseD> {
-        return async (response: AxiosResponse<ResponseD, RequestD>): Promise<AxiosResponse<ResponseD, RequestD>> => {
-            const responseMessage = AxiosResponseParser.parseLibraryToMessage(response);
-            const messageResponse = AxiosResponseParser.parseMessageToLibrary(
-                await onFulfilled(responseMessage),
-            );
-
-            return {
-                ...response,
-                ...messageResponse,
-            };
-        };
+    ): Parameters<AxiosInterceptorManager<AxiosResponse<ResponseD, RequestD>>["use"]>["0"] {
+        return async (response: AxiosResponse<ResponseD, RequestD>): Promise<AxiosResponse<ResponseD, RequestD>> => ({
+            ...response,
+            ...this.parser.parseMessageToLibrary(
+                await onFulfilled(this.parser.parseLibraryToMessage(response)),
+            ),
+        });
     }
 
 }

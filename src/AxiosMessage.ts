@@ -1,5 +1,6 @@
 import { Exception } from "@odg/exception";
 import {
+    type RequestOptionsParametersInterface,
     type InterceptorsInterface,
     type RequestInterface,
     type ResponseInterface,
@@ -25,26 +26,30 @@ export class AxiosMessage<
     ResponseData,
 > extends ODGMessage implements MessageInterface<RequestData, ResponseData> {
 
-    public readonly interceptors!: InterceptorsInterface<RequestData, ResponseData>;
+    public readonly interceptors!: Readonly<InterceptorsInterface<RequestData, ResponseData>>;
 
-    private readonly client: AxiosInstance;
+    protected readonly client: AxiosInstance;
 
-    public constructor(config?: RequestInterface<RequestData>) {
+    protected readonly requestParser = AxiosRequestParser;
+
+    protected readonly responseParser = AxiosResponseParser;
+
+    public constructor(options?: RequestOptionsParametersInterface<RequestData>) {
         super();
-        this.client = axios.create(config && AxiosRequestParser.parseMessageToLibrary(config));
+        this.client = axios.create(options && this.requestParser.parseMessageToLibrary(options));
 
-        this.interceptors = {
+        this.interceptors = Object.freeze({
             request: new AxiosInterceptorRequest<RequestData>(
                 this.client.interceptors.request as AxiosInterceptorManager<AxiosRequestConfig<RequestData>>,
             ),
             response: new AxiosInterceptorResponse<RequestData, ResponseData>(
                 this.client.interceptors.response,
             ),
-        };
+        });
     }
 
-    public setDefaultOptions(config?: RequestInterface<RequestData>): this {
-        const defaults = AxiosRequestParser.parseMessageToLibrary({
+    public setDefaultOptions(config?: RequestOptionsParametersInterface<RequestData>): this {
+        const defaults = this.requestParser.parseMessageToLibrary({
             ...config,
             headers: AxiosParser.parseHeaders(config?.headers),
         });
@@ -59,7 +64,7 @@ export class AxiosMessage<
     public getDefaultOptions(): RequestInterface<RequestData> {
         const config = this.client.defaults;
 
-        return AxiosRequestParser.parseLibraryToMessage<RequestData>({
+        return this.requestParser.parseLibraryToMessage<RequestData>({
             ...config,
             headers: AxiosParser.parseHeaders(config.headers) as unknown as RawAxiosResponseHeaders,
         });
@@ -70,19 +75,21 @@ export class AxiosMessage<
      *
      * @template {any} RequestD Request Data
      * @template {any} ResponseD Response Data
-     * @param {RequestInterface<RequestD>} options Opções de requisição
+     * @param {RequestOptionsParametersInterface<RequestD>} options Opções de requisição
      * @returns {Promise<ResponseInterface<RequestD, ResponseD>>}
      */
     public async request<
         RequestD = RequestData,
         ResponseD = ResponseData,
-    >(options: RequestInterface<RequestD>): Promise<ResponseInterface<RequestD, ResponseD>> {
+    >(
+        options: RequestOptionsParametersInterface<RequestD>,
+    ): Promise<ResponseInterface<RequestD, ResponseD>> {
         try {
             const response = await this.client.request<ResponseD, AxiosResponse<ResponseD, RequestD>, RequestD>(
-                AxiosRequestParser.parseMessageToLibrary(options),
+                this.requestParser.parseMessageToLibrary(options),
             );
 
-            return AxiosResponseParser.parseLibraryToMessage(response);
+            return this.responseParser.parseLibraryToMessage(response);
         } catch (error: unknown) {
             // eslint-disable-next-line no-throw-literal
             throw Exception.parse(error)!;

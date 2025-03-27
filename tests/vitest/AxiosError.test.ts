@@ -3,6 +3,7 @@ import { MessageException } from "@odg/message";
 import axios, { AxiosError } from "axios";
 
 import { AxiosMessage } from "../../src/AxiosMessage";
+import * as Interfaces from "../../src/interfaces";
 
 describe("AxiosMessage", () => {
     test("Test is Axios Error", async () => {
@@ -25,5 +26,9 @@ describe("AxiosMessage", () => {
 
         const axiosError = new AxiosError("zeze");
         expect(Exception.parse(axiosError)).toBeInstanceOf(MessageException);
+    });
+
+    test("interfaces file", () => {
+        expect(Interfaces).toBeTypeOf("object");
     });
 });

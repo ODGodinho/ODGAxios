@@ -84,7 +84,7 @@ describe("AxiosMessage", () => {
             throw error;
         });
 
-        const request = requester.request<undefined, { headers: HttpHeadersInterface }>({
+        const request = requester.request<unknown, { headers: HttpHeadersInterface }>({
             url: "https://api.github.com/users/ODGodinho/as",
         });
 

@@ -10,6 +10,8 @@ import { AxiosRequestParser } from "./AxiosRequestParser";
 
 export class AxiosResponseParser {
 
+    protected static requestParser = AxiosRequestParser;
+
     /**
      * Cast ResponseInterface To AxiosResponse
      *
@@ -26,8 +28,9 @@ export class AxiosResponseParser {
             status: response.status,
             statusText: http.STATUS_CODES[response.status] ?? "Unknown Status Code",
             headers: AxiosParser.parseHeaders(response.headers) as unknown as AxiosResponseHeaders,
-            config: AxiosRequestParser.parseMessageToLibrary({
+            config: this.requestParser.parseMessageToLibrary({
                 ...response.request,
+                endTime: Date.now(),
             }) as InternalAxiosRequestConfig<RequestD>,
         };
     }
@@ -47,8 +50,9 @@ export class AxiosResponseParser {
             data: response.data,
             status: response.status,
             headers: AxiosParser.parseHeaders(response.headers),
-            request: AxiosRequestParser.parseLibraryToMessage<RequestD>({
+            request: this.requestParser.parseLibraryToMessage<RequestD>({
                 ...response.config,
+                endTime: Date.now(),
                 headers: AxiosParser.parseHeaders(response.config.headers) as unknown as RawAxiosResponseHeaders,
             }),
         };

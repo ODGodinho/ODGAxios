@@ -1,3 +1,5 @@
+import { MessageException } from "@odg/message";
+
 import { AxiosMessage } from "../../src";
 
 describe("Axios Default Params test", () => {
@@ -25,5 +27,21 @@ describe("Axios Default Params test", () => {
                 baseURL: baseURL,
             },
         });
+    });
+
+    test("Test request Time", async () => {
+        const requester = new AxiosMessage();
+        const baseURL = "https://httpbin.org/delay/2";
+
+        requester.setDefaultOptions({
+            baseURL: baseURL,
+            timeout: 1000,
+        });
+
+        const myRequest = requester.request({});
+        await expect(myRequest).rejects.toThrow(MessageException);
+
+        const requestAwait = await myRequest.catch((error: MessageException<unknown>) => error);
+        expect(requestAwait.request?.timestamps).toBeGreaterThan(requester.getDefaultOptions().timeout! * 0.95);
     });
 });

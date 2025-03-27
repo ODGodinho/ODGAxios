@@ -1,7 +1,14 @@
-import { type onRejectedType, MessageUnknownException, MessageException } from "@odg/message";
+import {
+    type MessageInterceptorOptions,
+    type onFulfilledType,
+    type InterceptorManager,
+    type onRejectedType,
+    MessageUnknownException,
+    MessageException,
+} from "@odg/message";
 import { type AxiosInterceptorManager } from "axios";
 
-export abstract class AxiosInterceptor<AxiosInterceptor> {
+export abstract class AxiosInterceptor<AxiosInterceptor> implements InterceptorManager<unknown> {
 
     public constructor(
         protected readonly interceptor: AxiosInterceptorManager<AxiosInterceptor>,
@@ -13,9 +20,7 @@ export abstract class AxiosInterceptor<AxiosInterceptor> {
     }
 
     public clear(): void {
-        if ("clear" in this.interceptor) {
-            (this.interceptor.clear as () => unknown)();
-        }
+        this.interceptor.clear();
     }
 
     protected onRejected(onRejected?: onRejectedType) {
@@ -31,5 +36,11 @@ export abstract class AxiosInterceptor<AxiosInterceptor> {
             );
         };
     }
+
+    public abstract use(
+        onFulfilled?: onFulfilledType<unknown>,
+        onRejected?: onRejectedType,
+        options?: MessageInterceptorOptions
+    ): number;
 
 }

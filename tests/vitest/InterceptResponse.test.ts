@@ -3,7 +3,7 @@ import { type HttpHeadersInterface } from "@odg/message";
 import { AxiosMessage } from "../../src/AxiosMessage";
 
 describe("Intercept Eject", () => {
-    const endpoint = "https://api.github.com/";
+    const endpoint = "https://httpbin.org/anything";
     const requestHeaderIntercept = "data.biscoito";
 
     test("Teste intercept Response", async () => {
