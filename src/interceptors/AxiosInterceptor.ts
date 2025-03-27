@@ -1,10 +1,10 @@
+import { Exception } from "@odg/exception";
 import {
     type MessageInterceptorOptions,
     type onFulfilledType,
     type InterceptorManager,
     type onRejectedType,
     MessageUnknownException,
-    MessageException,
 } from "@odg/message";
 import { type AxiosInterceptorManager } from "axios";
 
@@ -25,7 +25,7 @@ export abstract class AxiosInterceptor<AxiosInterceptor> implements InterceptorM
 
     protected onRejected(onRejected?: onRejectedType) {
         return async (error: unknown): Promise<never> => {
-            const parserError = MessageException.parse(error)
+            const parserError = Exception.parse(error)
                 ?? new MessageUnknownException("Axios Message empty error", error);
             if (!onRejected) {
                 throw parserError;

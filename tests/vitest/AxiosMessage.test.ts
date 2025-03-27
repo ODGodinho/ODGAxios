@@ -1,5 +1,12 @@
+import { Exception } from "@odg/exception";
 import { MessageException, type HttpHeadersInterface } from "@odg/message";
+import {
+    type InternalAxiosRequestConfig,
+    AxiosHeaders,
+    AxiosError,
+} from "axios";
 
+import "../../src/register";
 import { AxiosMessage } from "../../src/AxiosMessage";
 import { AxiosResponseParser } from "../../src/parser/AxiosResponseParser";
 
@@ -21,6 +28,32 @@ describe("AxiosMessage", () => {
         await expect(response).resolves.toHaveProperty(testHeader, "test-header");
         expect(AxiosResponseParser.parseMessageToLibrary(await response))
             .toHaveProperty("statusText", "OK");
+    });
+
+    test("Response without config", async () => {
+        expect(() => AxiosResponseParser.parseLibraryToMessage({
+            config: undefined as unknown as InternalAxiosRequestConfig<unknown>,
+            data: {},
+            headers: {},
+            status: 200,
+            statusText: "OK",
+        })).not.toThrow();
+    });
+
+    test("Response without config", async () => {
+        expect(() => Exception.parse(new AxiosError(
+            "test",
+            "TEST",
+            { url: "", headers: new AxiosHeaders({}) },
+            undefined,
+            {
+                data: undefined,
+                headers: {},
+                status: 200,
+                statusText: "OK",
+                config: undefined as unknown as InternalAxiosRequestConfig<unknown>,
+            },
+        ))).not.toThrow();
     });
 
     test("Teste Request Intercept", async () => {

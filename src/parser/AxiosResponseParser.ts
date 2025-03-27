@@ -50,11 +50,13 @@ export class AxiosResponseParser {
             data: response.data,
             status: response.status,
             headers: AxiosParser.parseHeaders(response.headers),
-            request: this.requestParser.parseLibraryToMessage<RequestD>({
-                ...response.config,
-                endTime: Date.now(),
-                headers: AxiosParser.parseHeaders(response.config.headers) as unknown as RawAxiosResponseHeaders,
-            }),
+            request: typeof response.config === "undefined"
+                ? {}
+                : this.requestParser.parseLibraryToMessage<RequestD>({
+                    ...response.config,
+                    endTime: Date.now(),
+                    headers: AxiosParser.parseHeaders(response.config.headers) as unknown as RawAxiosResponseHeaders,
+                }),
         };
     }
 

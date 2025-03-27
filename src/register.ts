@@ -16,6 +16,11 @@ Exception.$parsers.add((exception, original) => {
                 endTime: Date.now(),
             })
             : undefined;
+
+        if (response && Object.keys({ ...response.request }).length === 0) {
+            response.request = config!;
+        }
+
         const newException = new MessageException(
             exception.message,
             exception.preview,
