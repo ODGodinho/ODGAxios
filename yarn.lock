@@ -641,9 +641,9 @@
   integrity sha512-yBWAAk9FiqFwv5+GjjRUk0rb452d+TZI9HZ4BEVTEGEjYp+EUDnaEp/a4+5anqBG2EOx7OUqZCjFuszBs3FQRg==
 
 "@odg/message@*":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@odg/message/-/message-1.6.0.tgz#d26ec62b322d671cb11efb43bd11517e6b1406e3"
-  integrity sha512-bJC/i/YmbL0PifDJVDy9eUIP56Fwq+o9/Vey30X3djGcHqOn95OFl/TFhalfkJXgZuQD26Os3ZiINUcv4efODQ==
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@odg/message/-/message-1.6.1.tgz#c4da4083dc3dac514e1554ec9b7dc9d1f2863e34"
+  integrity sha512-XvX513NdFlqdC518dqkyzWMIl1UB5QPVQ8T2bOhMe6vlcHbFMHwJP7xA4LXLOLvbnVklzirvV1kXisOfD/QiIA==
   dependencies:
     "@odg/exception" "*"
 
@@ -1757,9 +1757,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.5.73:
-  version "1.5.126"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.126.tgz#51c3be94c25710f2f49ffddbab5aca8983e11e2f"
-  integrity sha512-AtH1uLcTC72LA4vfYcEJJkrMk/MY/X0ub8Hv7QGAePW2JkeUFHEL/QfS4J77R6M87Sss8O0OcqReSaN1bpyA+Q==
+  version "1.5.127"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.127.tgz#350a16aa09fb7f070ad118fade31260a5c173733"
+  integrity sha512-Ke5OggqOtEqzCzcUyV+9jgO6L6sv1gQVKGtSExXHjD/FK0p4qzPZbrDsrCdy0DptcQprD0V80RCBYSWLMhTTgQ==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
