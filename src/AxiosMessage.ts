@@ -48,7 +48,7 @@ export class AxiosMessage<
         });
     }
 
-    public setDefaultOptions(config?: RequestOptionsParametersInterface<RequestData>): this {
+    public setDefaultOptions(config?: Partial<RequestOptionsParametersInterface<RequestData>>): this {
         const defaults = this.requestParser.parseMessageToLibrary({
             ...config,
             headers: AxiosParser.parseHeaders(config?.headers),
@@ -61,7 +61,7 @@ export class AxiosMessage<
         return this;
     }
 
-    public getDefaultOptions(): RequestInterface<RequestData> {
+    public getDefaultOptions(): Partial<RequestInterface<RequestData>> {
         const config = this.client.defaults;
 
         return this.requestParser.parseLibraryToMessage<RequestData>({
