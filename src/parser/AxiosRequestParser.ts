@@ -37,6 +37,7 @@ export class AxiosRequestParser {
             endTime: options.endTime,
             timestamps: options.endTime && options.startTime ? options.endTime - options.startTime : undefined,
             extras: options.extras,
+            ...Object.fromEntries(Object.entries(options).filter(([ key ]) => String(key).startsWith("$"))),
         } as AxiosRequestConfigExtra<RequestD>).filter(([ , value ]) => value !== undefined));
     }
 
@@ -71,6 +72,7 @@ export class AxiosRequestParser {
                 endTime: options.endTime,
                 timestamps: options.endTime && options.startTime ? options.endTime - options.startTime : undefined,
                 extras: options.extras,
+                ...Object.fromEntries(Object.entries(options).filter(([ key ]) => String(key).startsWith("$"))),
             } as RequestInterface<RequestD>).filter(([ , value ]) => value !== undefined),
         ) as RequestInterface<RequestD>;
     }

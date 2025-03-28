@@ -32,6 +32,7 @@ export class AxiosResponseParser {
                 ...response.request,
                 endTime: Date.now(),
             }) as InternalAxiosRequestConfig<RequestD>,
+            ...Object.fromEntries(Object.entries(response).filter(([ key ]) => String(key).startsWith("$"))),
         };
     }
 
@@ -57,6 +58,7 @@ export class AxiosResponseParser {
                     endTime: Date.now(),
                     headers: AxiosParser.parseHeaders(response.config.headers) as unknown as RawAxiosResponseHeaders,
                 }),
+            ...Object.fromEntries(Object.entries(response).filter(([ key ]) => String(key).startsWith("$"))),
         };
     }
 
