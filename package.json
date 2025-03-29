@@ -68,7 +68,7 @@
         "tsx": "^4.19.3",
         "typescript": "^5.8.2",
         "vite-tsconfig-paths": "^4",
-        "vitest": "^1"
+        "vitest": "^3.0.5"
     },
     "dependencies": {
         "@odg/exception": "*",
