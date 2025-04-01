@@ -17,7 +17,7 @@ describe("Intercept Eject", () => {
         });
 
         const interceptResponse = requester.interceptors.response.use((config) => {
-            config.data["biscoito"] = interceptHeader;
+            config.response.data["biscoito"] = interceptHeader;
 
             return config;
         });
@@ -47,7 +47,7 @@ describe("Intercept Eject", () => {
         });
 
         requester.interceptors.response.use((config) => {
-            config.data["biscoito"] = interceptHeader;
+            config.response.data["biscoito"] = interceptHeader;
 
             return config;
         }, undefined, {

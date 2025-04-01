@@ -26,7 +26,7 @@ Exception.$parsers.add((exception, original) => {
             exception.preview,
             original.code,
             response?.request ?? config,
-            response,
+            response?.response,
         );
         newException.stack = original.stack;
 

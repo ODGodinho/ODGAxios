@@ -1,9 +1,9 @@
 import { Exception } from "@odg/exception";
 import {
+    type MessageResponse,
     type RequestOptionsParametersInterface,
     type InterceptorsInterface,
     type RequestInterface,
-    type ResponseInterface,
     type MessageInterface,
     ODGMessage,
 } from "@odg/message";
@@ -76,14 +76,14 @@ export class AxiosMessage<
      * @template {any} RequestD Request Data
      * @template {any} ResponseD Response Data
      * @param {RequestOptionsParametersInterface<RequestD>} options Opções de requisição
-     * @returns {Promise<ResponseInterface<RequestD, ResponseD>>}
+     * @returns {Promise<MessageResponse<RequestD, ResponseD>>}
      */
     public async request<
         RequestD = RequestData,
         ResponseD = ResponseData,
     >(
         options: RequestOptionsParametersInterface<RequestD>,
-    ): Promise<ResponseInterface<RequestD, ResponseD>> {
+    ): Promise<MessageResponse<RequestD, ResponseD>> {
         try {
             const response = await this.client.request<ResponseD, AxiosResponse<ResponseD, RequestD>, RequestD>(
                 this.requestParser.parseMessageToLibrary(options),

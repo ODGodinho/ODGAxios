@@ -83,7 +83,7 @@ yarn add @odg/message @odg/axios axios
 For simple example usage, you can use [Inversify](https://www.npmjs.com/package/inversify) for Dependency Injection
 
 ```typescript
-import { type MessageInterface, type ResponseInterface } from "@odg/message";
+import { type MessageInterface, type MessageResponse } from "@odg/message";
 
 class Test {
 
@@ -92,7 +92,7 @@ class Test {
     ) {
     }
 
-    public async example(): Promise<ResponseInterface<
+    public async example(): Promise<MessageResponse<
       unknown, // Reques Body
       Record<string, unknown>, // Response Body
     >> {

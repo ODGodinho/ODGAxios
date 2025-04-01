@@ -11,7 +11,7 @@ describe("Intercept Eject", () => {
         const interceptHeader = "biscoito-intercept";
 
         requester.interceptors.response.use((config) => {
-            config.data["biscoito"] = interceptHeader;
+            config.response.data["biscoito"] = interceptHeader;
 
             return config;
         });
@@ -26,7 +26,7 @@ describe("Intercept Eject", () => {
         const interceptHeader = "biscoito-intercept";
 
         const interceptor = requester.interceptors.response.use((config) => {
-            config.data["biscoito"] = interceptHeader;
+            config.response.data["biscoito"] = interceptHeader;
 
             return config;
         });
