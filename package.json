@@ -60,7 +60,7 @@
         "@odg/eslint-config": "*",
         "@odg/tsconfig": "*",
         "@types/node": ">=20",
-        "@vitest/coverage-istanbul": "^1",
+        "@vitest/coverage-istanbul": "^2.0.0",
         "concurrently": "^9.1.2",
         "husky": "^9.1.7",
         "rimraf": "*",
