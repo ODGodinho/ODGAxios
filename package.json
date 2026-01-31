@@ -57,7 +57,7 @@
     "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
     "license": "MIT",
     "devDependencies": {
-        "@odg/eslint-config": "*",
+        "@odg/eslint-config": "3.0.0",
         "@odg/tsconfig": "*",
         "@types/node": ">=20",
         "@vitest/coverage-istanbul": "^1",
