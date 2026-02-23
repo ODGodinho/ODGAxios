@@ -1,10 +1,10 @@
-import { type HttpHeadersInterface } from "@odg/message";
+import type { HttpHeadersInterface } from "@odg/message";
 
-import { AxiosMessage } from "../../src/AxiosMessage";
+import { AxiosMessage } from "src/AxiosMessage";
 
 describe("Intercept Eject", () => {
     const endpoint = "https://httpbin.org/anything";
-    const requestHeaderIntercept = "data.biscoito";
+    const requestHeaderIntercept = "response.data.biscoito";
 
     test("Teste intercept Response", async () => {
         const requester = new AxiosMessage<unknown, Record<string, string>>();
@@ -42,6 +42,8 @@ describe("Intercept Eject", () => {
         const requester = new AxiosMessage();
         const interceptHeader = "intercept-eject";
 
+        requester.interceptors.response.use();
+
         await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
             url: endpoint,
         })).resolves.not.toHaveProperty(requestHeaderIntercept, interceptHeader);
@@ -53,7 +55,7 @@ describe("Intercept Eject", () => {
         requester.interceptors.response.use();
 
         await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://reqres.in/api/unknown/23",
+            url: "https://google.com/404",
         })).rejects.toHaveProperty("response.status", 404);
     });
 });

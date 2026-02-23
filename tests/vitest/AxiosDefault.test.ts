@@ -9,7 +9,7 @@ describe("Axios Default Params test", () => {
 
         expect(requester.getDefaultOptions().baseURL).toBeUndefined();
         requester.setDefaultOptions({
-            baseURL: baseURL,
+            baseURL,
         });
         expect(requester.getDefaultOptions().baseURL).toEqual(baseURL);
     });
@@ -19,12 +19,12 @@ describe("Axios Default Params test", () => {
         const baseURL = "https://1.1.1.1/";
 
         requester.setDefaultOptions({
-            baseURL: baseURL,
+            baseURL,
         });
 
         await expect(requester.request({})).resolves.toMatchObject({
             request: {
-                baseURL: baseURL,
+                baseURL,
             },
         });
     });
@@ -34,14 +34,16 @@ describe("Axios Default Params test", () => {
         const baseURL = "https://httpbin.org/delay/2";
 
         requester.setDefaultOptions({
-            baseURL: baseURL,
+            baseURL,
             timeout: 1000,
         });
 
         const myRequest = requester.request({});
+
         await expect(myRequest).rejects.toThrow(MessageException);
 
         const requestAwait = await myRequest.catch((error: MessageException<unknown>) => error);
+
         expect(requestAwait.request?.timestamps).toBeGreaterThan(requester.getDefaultOptions().timeout! * 0.95);
         expect(requestAwait.request?.baseURL).toEqual(baseURL);
     });

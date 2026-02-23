@@ -1,18 +1,18 @@
 import { Exception } from "@odg/exception";
 import {
-    type MessageResponse,
-    type RequestOptionsParametersInterface,
     type InterceptorsInterface,
-    type RequestInterface,
     type MessageInterface,
+    type MessageResponse,
     ODGMessage,
+    type RequestInterface,
+    type RequestOptionsParametersInterface,
 } from "@odg/message";
 import axios, {
-    type AxiosRequestConfig,
-    type AxiosInterceptorManager,
-    type RawAxiosResponseHeaders,
     type AxiosInstance,
+    type AxiosInterceptorManager,
+    type AxiosRequestConfig,
     type AxiosResponse,
+    type RawAxiosResponseHeaders,
 } from "axios";
 
 import { AxiosInterceptorRequest } from "./interceptors/AxiosInterceptorRequest";
@@ -91,7 +91,6 @@ export class AxiosMessage<
 
             return this.responseParser.parseLibraryToMessage(response);
         } catch (error: unknown) {
-            // eslint-disable-next-line no-throw-literal
             throw Exception.parse(error)!;
         }
     }

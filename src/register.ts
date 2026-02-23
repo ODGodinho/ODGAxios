@@ -23,11 +23,12 @@ Exception.$parsers.add((exception, original) => {
 
         const newException = new MessageException(
             exception.message,
-            exception.preview,
+            exception.getPrevious(),
             original.code,
             response?.request ?? config,
             response?.response,
         );
+
         newException.stack = original.stack;
 
         Object.defineProperty(newException, "isAxiosError", {

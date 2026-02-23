@@ -1,13 +1,13 @@
-import {
-    type MessageInterceptorOptions,
-    type onFulfilledType,
-    type onRejectedType,
-    type InterceptorManager,
-    type RequestInterface,
+import type {
+    MessageInterceptorOptions,
+    onFulfilledType,
+    onRejectedType,
+    InterceptorManager,
+    RequestInterface,
 } from "@odg/message";
-import { type AxiosInterceptorManager, type AxiosRequestConfig } from "axios";
+import type { AxiosInterceptorManager, AxiosRequestConfig } from "axios";
 
-import { type AxiosRequestConfigExtra } from "../interfaces";
+import type { AxiosRequestConfigExtra } from "../interfaces";
 import { AxiosRequestParser } from "../parser/AxiosRequestParser";
 
 import { AxiosInterceptor } from "./AxiosInterceptor";

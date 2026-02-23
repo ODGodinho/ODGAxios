@@ -1,5 +1,5 @@
-import { type HttpHeadersInterface } from "@odg/message";
-import { type AxiosResponseHeaders } from "axios";
+import type { HttpHeadersInterface } from "@odg/message";
+import type { AxiosResponseHeaders } from "axios";
 
 export class AxiosParser {
 
@@ -20,7 +20,7 @@ export class AxiosParser {
     /**
      * Check if headers is Axios Headers
      *
-     * @param {unknown} headers Axios Headers
+     * @param {unknown} headers Objeto com headers do axios
      * @returns {headers is AxiosResponseHeaders}
      */
     protected static isAxiosHeaders(headers: unknown): headers is AxiosResponseHeaders {

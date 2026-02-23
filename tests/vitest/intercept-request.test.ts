@@ -1,6 +1,6 @@
-import { type HttpHeadersInterface } from "@odg/message";
+import type { HttpHeadersInterface } from "@odg/message";
 
-import { AxiosMessage } from "../../src/AxiosMessage";
+import { AxiosMessage } from "src/AxiosMessage";
 
 describe("AxiosMessage", () => {
     test("Teste Request Intercept", async () => {
@@ -9,6 +9,7 @@ describe("AxiosMessage", () => {
 
         requester.interceptors.request.use((config) => {
             if (!config.headers) return config;
+
             config.headers["teste"] = interceptHeader;
 
             return config;
@@ -27,7 +28,7 @@ describe("AxiosMessage", () => {
         });
 
         await expect(requester.request<undefined, { headers: HttpHeadersInterface }>({
-            url: "https://reqres.in/api/unknown/23",
+            url: "https://www.google.com/404",
         })).rejects.toHaveProperty("response.status", 404);
     });
 });

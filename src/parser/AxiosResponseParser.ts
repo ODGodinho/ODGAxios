@@ -1,8 +1,11 @@
 import http from "node:http";
 
 import { MessageResponse } from "@odg/message";
-import {
-    type InternalAxiosRequestConfig, type RawAxiosResponseHeaders, type AxiosResponse, type AxiosResponseHeaders,
+import type {
+    AxiosResponse,
+    AxiosResponseHeaders,
+    InternalAxiosRequestConfig,
+    RawAxiosResponseHeaders,
 } from "axios";
 
 import { AxiosParser } from "./AxiosParser";
@@ -32,7 +35,7 @@ export class AxiosResponseParser {
                 ...message.request,
                 endTime: Date.now(),
             }) as InternalAxiosRequestConfig<RequestD>,
-            ...Object.fromEntries(Object.entries(message).filter(([ key ]) => String(key).startsWith("$"))),
+            ...Object.fromEntries(Object.entries(message).filter(([ key ]) => key.startsWith("$"))),
         };
     }
 
@@ -51,7 +54,7 @@ export class AxiosResponseParser {
             data: response.data,
             status: response.status,
             headers: AxiosParser.parseHeaders(response.headers),
-            ...Object.fromEntries(Object.entries(response).filter(([ key ]) => String(key).startsWith("$"))),
+            ...Object.fromEntries(Object.entries(response).filter(([ key ]) => key.startsWith("$"))),
         };
 
         return new MessageResponse(

@@ -1,4 +1,4 @@
-import { type HttpHeadersInterface } from "@odg/message";
+import type { HttpHeadersInterface } from "@odg/message";
 
 import { AxiosMessage } from "../../src/AxiosMessage";
 
@@ -9,6 +9,7 @@ describe("Intercept Eject", () => {
 
         const interceptRequest = requester.interceptors.request.use((config) => {
             if (!config.headers) return config;
+
             config.headers["teste"] = interceptHeader;
 
             return config;
@@ -41,6 +42,7 @@ describe("Intercept Eject", () => {
 
         requester.interceptors.request.use((config) => {
             if (!config.headers) return config;
+
             config.headers["teste"] = interceptHeader;
 
             return config;

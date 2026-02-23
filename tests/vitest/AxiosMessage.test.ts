@@ -62,6 +62,7 @@ describe("AxiosMessage", () => {
 
         requester.interceptors.request.use((config) => {
             if (!config.headers) return config;
+
             config.headers["teste"] = interceptHeader;
 
             return config;

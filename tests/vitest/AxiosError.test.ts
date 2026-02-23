@@ -22,9 +22,10 @@ describe("AxiosMessage", () => {
     });
 
     test("Teste Parser Error Class", async () => {
-        expect(Exception.parse(new Error("error"))).toHaveProperty("message", "error");
+        expect(Exception.parse("error")).toHaveProperty("message", "error");
 
         const axiosError = new AxiosError("zeze");
+
         expect(Exception.parse(axiosError)).toBeInstanceOf(MessageException);
     });
 
