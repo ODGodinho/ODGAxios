@@ -1,8 +1,8 @@
 import type {
+    InterceptorManager,
     MessageInterceptorOptions,
     onFulfilledType,
     onRejectedType,
-    InterceptorManager,
     RequestInterface,
 } from "@odg/message";
 import type { AxiosInterceptorManager, AxiosRequestConfig } from "axios";

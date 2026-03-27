@@ -1,3 +1,7 @@
+import type { Agent as HttpAgent } from "node:http";
+import type { Agent as HttpsAgent } from "node:https";
+import type { LookupFunction } from "node:net";
+
 import type { ParametersInterface, RequestInterface } from "@odg/message";
 
 import type { AxiosRequestConfigExtra } from "../interfaces/AxiosInterfaceExtra";
@@ -33,6 +37,9 @@ export class AxiosRequestParser {
             socketPath: options.socketPath,
             proxy: options.proxy,
             signal: options.signal,
+            httpAgent: options.httpAgent,
+            httpsAgent: options.httpsAgent,
+            lookup: options.lookup,
             startTime: options.startTime ?? Date.now(),
             endTime: options.endTime,
             timestamps: options.endTime && options.startTime ? options.endTime - options.startTime : undefined,
@@ -68,6 +75,9 @@ export class AxiosRequestParser {
                 socketPath: options.socketPath,
                 proxy: options.proxy,
                 signal: options.signal,
+                httpAgent: options.httpAgent as HttpAgent,
+                httpsAgent: options.httpsAgent as HttpsAgent,
+                lookup: options.lookup as LookupFunction,
                 startTime: options.startTime ?? Date.now(),
                 endTime: options.endTime,
                 timestamps: options.endTime && options.startTime ? options.endTime - options.startTime : undefined,

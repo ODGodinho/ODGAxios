@@ -1,10 +1,10 @@
 import { Exception } from "@odg/exception";
 import {
-    type MessageInterceptorOptions,
-    type onFulfilledType,
     type InterceptorManager,
-    type onRejectedType,
+    type MessageInterceptorOptions,
     MessageUnknownException,
+    type onFulfilledType,
+    type onRejectedType,
 } from "@odg/message";
 import type { AxiosInterceptorManager } from "axios";
 

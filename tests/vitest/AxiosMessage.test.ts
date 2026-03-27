@@ -1,9 +1,9 @@
 import { Exception } from "@odg/exception";
-import { MessageException, type HttpHeadersInterface } from "@odg/message";
+import { type HttpHeadersInterface, MessageException } from "@odg/message";
 import {
-    type InternalAxiosRequestConfig,
-    AxiosHeaders,
     AxiosError,
+    AxiosHeaders,
+    type InternalAxiosRequestConfig,
 } from "axios";
 
 import "../../src/register";
